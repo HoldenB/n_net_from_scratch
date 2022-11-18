@@ -80,6 +80,9 @@ def ex_two() -> None:
     # match what the class targets say because those are the expected outputs
     # and means that we correctly classified the class(es)
     predictions = np.argmax(softmax_outputs, axis=1)
+    
+    # Accuracy will be a vector with outputs of [0, 1, 1, 0, etc] where 1
+    # appears when something was properly classified
     accuracy = np.mean(predictions == class_targets)
     print(accuracy)
     
