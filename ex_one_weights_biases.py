@@ -1,8 +1,4 @@
-import nnfs
 import numpy as np
-
-
-nnfs.init()
 
 
 class LayerDense:
