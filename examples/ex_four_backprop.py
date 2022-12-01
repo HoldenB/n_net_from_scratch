@@ -1,10 +1,8 @@
-
-
 def ex_four():
     # Results from a forward pass
-    x = [1.0, -2.0, 3.0]    # input values
-    w = [-3.0, -1.0, 2.0]   # weights
-    b = 1.0                 # bias
+    x = [1.0, -2.0, 3.0]  # input values
+    w = [-3.0, -1.0, 2.0]  # weights
+    b = 1.0  # bias
 
     # ReLu = max(x, 0) so dReLu = 1(x > 0) so 1 if z > 0 else 0
     # z will be the output of ReLu(w * i + b) or C(w * i + b)
@@ -18,7 +16,7 @@ def ex_four():
     # Activation function
     y = max(z, 0)
 
-    print(f'First y: {y}')
+    print(f"First y: {y}")
 
     # Backwards pass
     # Deriv from the next layer
@@ -26,7 +24,7 @@ def ex_four():
 
     # Deriv of ReLu and the chain rule (needs result from next layer
     # hence the "backwards pass")
-    d_ReLu_dz = d_value * (1. if z > 0 else 0.)
+    d_ReLu_dz = d_value * (1.0 if z > 0 else 0.0)
 
     # Moving backwards, what comes before we perform the activation function?
     # The sum of the weighted inputs and bias.
@@ -68,7 +66,7 @@ def ex_four():
 
     updated_bias = b + -0.001 * d_ReLu_db
 
-    print('Updated weights and bias')
+    print("Updated weights and bias")
     print(updated_weights)
     print(updated_bias)
 
@@ -76,7 +74,7 @@ def ex_four():
     z = sum(x_w_result) + updated_bias
     y = max(z, 0)
 
-    print(f'Second y: {y}')
+    print(f"Second y: {y}")
 
 
 ex_four()

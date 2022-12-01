@@ -13,9 +13,7 @@ class LayerDense:
 
 
 def ex_one() -> None:
-    X = [[1, 2, 3, 2.5],
-         [2.0, 5.0, -1.0, 2.0],
-         [-1.5, 2.7, 3.3, -0.8]]
+    X = [[1, 2, 3, 2.5], [2.0, 5.0, -1.0, 2.0], [-1.5, 2.7, 3.3, -0.8]]
 
     layer_one = LayerDense(4, 5)
     layer_two = LayerDense(5, 2)
@@ -28,23 +26,24 @@ def ex_one() -> None:
     # ------------------------------------
 
     # Example inputs and weights
-    X = [[1, 2, 3, 2.5],
-         [2.0, 5.0, -1.0, 2.0],
-         [-1.5, 2.7, 3.3, -0.8]]
+    X = [[1, 2, 3, 2.5], [2.0, 5.0, -1.0, 2.0], [-1.5, 2.7, 3.3, -0.8]]
 
-    weights = [[0.2, 0.8, -0.5, 1.0],
-               [0.5, -0.91, 0.26, -0.5],
-               [-0.26, -0.27, 0.17, 0.87]]
+    weights = [
+        [0.2, 0.8, -0.5, 1.0],
+        [0.5, -0.91, 0.26, -0.5],
+        [-0.26, -0.27, 0.17, 0.87],
+    ]
 
     # Need to transpose weights in order to dot the matrices
     weights_transposed = np.array(weights).T
 
     biases = [2, 3, 0.5]
 
-    weights_second_layer = \
-        [[0.1, -0.14, 0.5],
+    weights_second_layer = [
+        [0.1, -0.14, 0.5],
         [-0.5, 0.12, -0.33],
-        [-0.44, 0.73, -0.13]]
+        [-0.44, 0.73, -0.13],
+    ]
 
     weights_second_layer_transposed = np.array(weights_second_layer).T
 
@@ -53,7 +52,9 @@ def ex_one() -> None:
     # Become input to second layer
     layer_one_outputs = np.dot(X, weights_transposed) + biases
 
-    layer_two_outputs = np.dot(layer_one_outputs, weights_second_layer_transposed) + biases_second_layer
+    layer_two_outputs = (
+        np.dot(layer_one_outputs, weights_second_layer_transposed) + biases_second_layer
+    )
     print(layer_two_outputs)
 
 

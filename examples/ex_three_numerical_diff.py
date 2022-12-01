@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def f(x):
-    return 2*x**2
+    return 2 * x**2
 
 
 def tangent_line(deriv, x, b):
@@ -12,7 +12,7 @@ def tangent_line(deriv, x, b):
 
 def ex_three() -> None:
 
-    plot_colors = ['k', 'g', 'r', 'b', 'c']
+    plot_colors = ["k", "g", "r", "b", "c"]
     stop = len(plot_colors)
 
     # More granular approach than simply range(x)
@@ -38,17 +38,17 @@ def ex_three() -> None:
         # Plot the tangent line
         # +-0.9 to draw visible tan line on graph
         # Calc y for given x using tan line
-        to_plot = [x1-0.9, x1, x1+0.9]
+        to_plot = [x1 - 0.9, x1, x1 + 0.9]
 
         plt.scatter(x1, y1, c=plot_colors[i])
 
         plt.plot(
             to_plot,
             [tangent_line(approx_deriv, x, b) for x in to_plot],
-            c=plot_colors[i]
+            c=plot_colors[i],
         )
 
-        print(f'Approx deriv for f(x) where x={x1} is {approx_deriv}')
+        print(f"Approx deriv for f(x) where x={x1} is {approx_deriv}")
 
     plt.show()
 

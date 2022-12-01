@@ -47,7 +47,7 @@ class LossCategoricalCrossEntropy(Loss):
     def forward(self, y_predict, y_true):
         sample_length = len(y_predict)
         # Clip data on both sides to prevent division by 0 and -inf
-        y_predict_clipped = np.clip(y_predict, 1e-7, 1-1e-7)
+        y_predict_clipped = np.clip(y_predict, 1e-7, 1 - 1e-7)
 
         # If Scalar values (not one-hot encoded), i.e. scalar values for
         # categorical labels
@@ -56,7 +56,7 @@ class LossCategoricalCrossEntropy(Loss):
         else:
             # If One-Hot encoded (shape == 2 /  vector of vectors)
             correct_confidences = np.sum(y_predict_clipped * y_true, axis=1)
-            
+
         negative_log_likelihoods = -np.log(correct_confidences)
         return negative_log_likelihoods
 
@@ -76,7 +76,7 @@ def main():
     activation_two_output = ActivationSoftMax.forward(layer_two_output)
 
     print(activation_two_output[:5])
-    
+
     loss_function = LossCategoricalCrossEntropy()
     loss = loss_function.calculate(activation_two_output, y)
     print(loss)
