@@ -15,18 +15,33 @@ class LayerDense:
         self.biases = np.zeros(shape=(1, n_neurons))
 
     def forward(self, inputs):
+        # Cache the inputs
+        self.inputs = inputs
         return np.dot(inputs, self.weights) + self.biases
+
+    def backward(self, d_values):
+        # Gradients on parameters
+        self.d_weights = np.dot(self.inputs.T, d_values)
+        self.d_biases = np.sum(d_values, axis=0, keepdims=True)
+        # Gradient on values
+        self.d_inputs = np.dot(d_values, self.weights.T)
 
 
 class ActivationReLU:
-    @staticmethod
-    def forward(inputs):
+    def forward(self, inputs):
+        self.inputs = inputs
         return np.maximum(0, inputs)
+
+    def backward(self, d_values):
+        # We need to modify original so we need to copy
+        self.d_inputs = d_values.copy()
+        # Zero gradient where input values are negative
+        self.d_inputs[self.inputs <= 0] = 0
 
 
 class ActivationSoftMax:
-    @staticmethod
-    def forward(inputs):
+    def forward(self, inputs):
+        self.inputs = inputs
         # Un-normalized probabilities
         exp_values = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
         # Norm for each sample
@@ -65,19 +80,24 @@ def main():
     # 100 feature sets of 3 classes
     (X, y) = spiral_data(samples=100, classes=3)
 
-    # Inputs is 2 because we have 2 unique features that describe
+    # Inputs are 2 because we have 2 unique features that describe
     # the data (x and y axis)
     layer_one = LayerDense(2, 3)
-    layer_one_output = layer_one.forward(X)
-    activation_one_output = ActivationReLU.forward(layer_one_output)
-
     layer_two = LayerDense(3, 3)
+    activation_ReLU = ActivationReLU()
+    activation_softMax = ActivationSoftMax()
+    loss_function = LossCategoricalCrossEntropy()
+
+    # Layer one forward
+    layer_one_output = layer_one.forward(X)
+    activation_one_output = activation_ReLU.forward(layer_one_output)
+
+    # Layer two forward
     layer_two_output = layer_two.forward(activation_one_output)
-    activation_two_output = ActivationSoftMax.forward(layer_two_output)
+    activation_two_output = activation_softMax.forward(layer_two_output)
 
     print(activation_two_output[:5])
 
-    loss_function = LossCategoricalCrossEntropy()
     loss = loss_function.calculate(activation_two_output, y)
     print(loss)
 
