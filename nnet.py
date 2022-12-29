@@ -75,6 +75,19 @@ class LossCategoricalCrossEntropy(Loss):
         negative_log_likelihoods = -np.log(correct_confidences)
         return negative_log_likelihoods
 
+    def backward(self, d_values, y_true):
+        num_samples = len(d_values)
+        num_labels = len(d_values[0])
+
+        # If labels are sparse, turn them into one hot vector
+        if len(y_true.shape) == 1:
+            y_true = np.eye(num_labels)[y_true]
+
+        # Calculate gradient
+        self.d_inputs = -y_true / d_values
+        # Normalize gradient
+        self.d_inputs = self.d_inputs / num_samples
+
 
 def main():
     # 100 feature sets of 3 classes
